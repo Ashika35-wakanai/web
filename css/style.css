@@ -1,0 +1,587 @@
+/* --- Prevent scrolling and force fit to viewport, only for .no-scroll pages --- */
+.no-scroll, .no-scroll html, .no-scroll body {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden !important;
+  box-sizing: border-box;
+}
+
+.no-scroll body, .no-scroll .container, .no-scroll .main-container, .no-scroll .wrap, .no-scroll main, .no-scroll .site-header, .no-scroll .site-footer {
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.no-scroll main.container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px - 40px); /* header/footer est. */
+  min-height: 0;
+  padding: 0 8px;
+}
+
+.no-scroll .main-container {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.no-scroll .product-grid, .no-scroll .cart-summary {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.no-scroll .footer-buttons {
+  flex-shrink: 0;
+  margin-bottom: 0;
+}
+
+/* Responsive scaling for small screens */
+@media (max-width: 900px), (max-height: 700px) {
+  .no-scroll .product-card, .no-scroll .cart-summary, .no-scroll .main-container, .no-scroll .product-grid {
+    font-size: 0.9em;
+  }
+  .no-scroll .product-card {
+    min-height: 220px;
+    padding: 8px 4px 8px 4px;
+  }
+  .no-scroll .cart-summary {
+    max-height: none !important;   /* remove forced 70vh */
+    height: auto !important;
+    overflow: visible !important;
+  }
+}
+/* Product filter buttons */
+.product-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 22px;
+  margin-top: 8px;
+}
+.filter-btn {
+  background: #e5e7eb;
+  color: #222;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+.filter-btn.active, .filter-btn:hover {
+  background: #3b82f6;
+  color: #fff;
+}
+/* bland ahh style */
+body{font-family:Arial,Helvetica,sans-serif;background:#f7f7f9;color:#222;margin:0}
+.wrap{max-width:980px;margin:0 auto;padding:12px}
+.site-header{background:#fff;padding:12px 0;border-bottom:1px solid #eee}
+.logo{font-weight:700;text-decoration:none;color:#333}
+.container{padding:24px}
+.products{display:flex;flex-wrap:wrap;gap:16px}
+.product{background:#fff;padding:12px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.04);width:220px}
+.product img{width:100%;height:140px;object-fit:cover;border-radius:6px}
+.btn{display:inline-block;padding:8px 12px;background:#3b82f6;color:#fff;text-decoration:none;border-radius:6px}
+.cart{width:100%;border-collapse:collapse}
+.cart th,.cart td{padding:8px;border-bottom:1px solid #eee;text-align:left}
+.total{font-weight:700}
+
+/* POS-specific styles */
+.main-container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  width: calc(100% - 400px);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+.product-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  border: 1px solid #e0e0e0;
+  padding: 18px 14px 16px 14px;
+  text-align: center;
+  position: relative;
+  transition: box-shadow 0.2s, transform 0.2s;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.product-card:hover {
+  box-shadow: 0 8px 24px rgba(60,120,200,0.13);
+  transform: translateY(-2px) scale(1.02);
+}
+.product-card.unavailable {
+  background: #f7f7f7;
+  border-color: #e0e0e0;
+  opacity: 0.7;
+}
+.product-img-wrap {
+  width: 100%;
+  max-width: 180px;
+  aspect-ratio: 1/1;
+  margin: 0 auto 10px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #f3f3f3;
+}
+.product-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.product-info h3 {
+  font-size: 1.15rem;
+  margin: 8px 0 4px 0;
+  font-weight: 600;
+  color: #2d3748;
+}
+.product-info .price {
+  font-size: 1.1rem;
+  color: #3b82f6;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.product-ingredients {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #eee;
+  color: #666;
+  font-size: 0.95em;
+}
+.product-actions {
+  margin-top: 14px;
+}
+.add-cart-btn {
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s;
+  text-decoration: none;
+  display: inline-block;
+}
+.add-cart-btn:hover:not([disabled]) {
+  background: #2563eb;
+}
+.unavailable-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #dc3545;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 2;
+}
+.cart-summary {
+  position: absolute;
+  top: 100x;
+  right: 5px;
+  width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 100;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  padding: 22px 18px 18px 18px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+  border-radius: 14px;
+}
+body{font-family:'Segoe UI',Arial,Helvetica,sans-serif;background:#f7f7f9;color:#222;margin:0}
+h1{
+  font-size:2.1em;
+  margin-bottom:18px;
+  font-weight:700;
+  color:#2d3748;
+  letter-spacing:-1px;
+}
+
+/* Transaction Details */
+.transaction-details {
+  background: #f5f5f5;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
+}
+.detail-row span {
+  font-weight: 600;
+}
+.detail-row.total {
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 2px solid #333;
+  padding: 10px 0;
+}
+.detail-row input {
+  padding: 5px;
+  width: 100px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* Payment Methods */
+.payment-methods {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 10px 0;
+}
+.payment-btn {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  font-size: 12px;
+}
+.cash-btn { background: #28a745; }
+.gcash-btn { background: #088bfe; }
+.foodp-btn { background: #6c757d; }
+.payment-btn:hover { opacity: 0.8; }
+
+/* Number Pad */
+.number-pad {
+  display: block;     /* IMPORTANT */
+  margin: 10px 0;
+}
+.numpad-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+.number-pad button {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  background: #6c757d;
+  color: #fff;
+  font-size: 14px;
+}
+.number-pad button:hover {
+  opacity: 0.8;
+}
+.func-btn {
+  background: #6c757d;
+}
+
+.clr-btn { background: #6c757d; }
+.disc-btn { background: #ffc107; color: #000; }
+.void-btn { background: #dc3545; }
+
+
+/* Checkout Button */
+.checkout-btn {
+  width: 100%;
+  padding: 15px !important;
+  background: #28a745 !important;
+  text-align: center !important;
+  font-weight: bold !important;
+  font-size: 16px !important;
+  display: block !important;
+  margin-top: 10px !important;
+}
+.footer-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+.footer-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+/* ================================
+   MOBILE KEYBOARD FIX (INGREDIENTS)
+   ================================ */
+@media (max-width: 1024px) {
+
+  /* Re-enable scrolling on mobile */
+  body {
+    overflow-y: auto !important;
+    padding-bottom: 300px;
+  }
+
+  /* Disable sticky/fixed panel on mobile */
+  .ingredient-add-panel {
+    width: 260px !important;
+    flex: 0 0 260px !important;
+    padding: 14px !important;
+    border-width: 3px !important;
+    transform: none !important;
+  }
+  /* Neutralize no-scroll mode on mobile */
+  .no-scroll,
+  .no-scroll body {
+    overflow-y: auto !important;
+    height: auto !important;
+  }
+}
+/* =====================================
+   TABLET — ORDER SUMMARY ONLY
+   ===================================== */
+@media (min-width: 768px) and (max-width: 1100px) {
+
+  .no-scroll .cart-summary {
+    position: fixed;
+    right: 24px;
+    top: 90px;
+
+    width: 340px;        /* smaller than PC */
+    padding: 14px;
+    font-size: 14px;
+  }
+
+  .no-scroll .cart-summary .cart-list-wrap {
+    max-height: 180px;
+    overflow-y: auto;
+  }
+
+
+
+  .no-scroll .checkout-btn {
+    font-size: 15px !important;
+    padding: 10px !important;
+  }
+}
+/* =====================================
+   TABLET — NUMBER PAD FINAL FIX
+   ===================================== */
+@media (min-width: 768px) and (max-width: 1100px) {
+
+  .no-scroll .number-pad {
+    display: block !important;
+    margin-top: 10px;
+  }
+
+  .no-scroll .numpad-row {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .no-scroll .number-pad button {
+    width: 100% !important;
+    height: 38px !important;
+    padding: 0 !important;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 13px;
+    line-height: 1;
+    white-space: nowrap;
+    border-radius: 6px;
+  }
+}
+
+
+/* PHONE ONLY */
+@media (max-width: 767px) {
+  .ingredients-page {
+    padding-bottom: 300px;
+  }
+}
+
+/* TABLET & UP */
+@media (min-width: 768px) {
+  .ingredients-page {
+    padding-bottom: 0 !important;
+  }
+}
+/* =====================================
+   FIX iPad INPUT JUMP — INGREDIENTS ONLY
+   ===================================== */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  /* Disable no-scroll behavior ONLY for ingredients */
+  body.ingredients-page,
+  body.ingredients-page.no-scroll {
+    height: auto !important;
+    overflow-y: auto !important;
+  }
+
+  body.ingredients-page .container,
+  body.ingredients-page .main-container {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Center admin content safely */
+  body.ingredients-page .admin-wrap {
+    max-width: 900px;
+    margin: 0 auto !important;
+  }
+
+}
+
+/* INGREDIENTS PAGE ONLY */
+.ingredients-page {
+  overflow-y: auto;
+}
+
+/* PHONE ONLY */
+@media (max-width: 767px) {
+  .ingredients-page {
+    padding-bottom: 300px;
+  }
+}
+
+/* TABLET & UP */
+@media (min-width: 768px) {
+  .ingredients-page {
+    padding-bottom: 0 !important;
+  }
+}
+/* ======================================
+   SAFE no-scroll — TABLET & PHONE ONLY
+   (Prevents input jumping, NO PC impact)
+   ====================================== */
+@media (max-width: 1024px) {
+
+  .no-scroll {
+    overflow-x: hidden;
+  }
+
+  .no-scroll body {
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+
+  .no-scroll .container,
+  .no-scroll .main-container {
+    min-height: 0;
+    height: auto;
+    overflow: visible;
+  }
+
+}
+/* =====================================
+   MENU CATEGORY — iPAD / TABLET FIX
+   (prevents input jump & tall white box)
+   ===================================== */
+@media (max-width: 1024px) {
+
+  /* Disable no-scroll ONLY for menu page */
+  body.menu-page.no-scroll {
+    height: auto !important;
+    overflow-y: auto !important;
+  }
+
+  body.menu-page.no-scroll .container,
+  body.menu-page.no-scroll .main-container {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+}
+/* TABLET — CENTER INGREDIENTS CONTENT (REAL FIX) */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  body.ingredients-page .container > * {
+    padding-left: 0;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 950px;
+  }
+
+}
+
+/* TABLET — SHIFT INGREDIENTS PANEL LEFT */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  body.ingredients-page .ingredients-card,
+  body.ingredients-page .ingredients-panel,
+  body.ingredients-page .admin-panel {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+
+}
+
+/*  FIX WHITE LEFT GAP — INGREDIENTS (TABLET ONLY) */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  body.ingredients-page.no-scroll main.container {
+    padding-left: 13px !important; /* or 0 if you want flush and this is the adjust for the container with the white thing */
+    
+  }
+  .ingredients-grid {
+    padding-left: 16px;   /* adjust this value adjust this if you want to adjust the list of the ingredients the white box*/
+  }
+  .back-to-dashboard {
+    margin-left: 12px;
+  } /*adjust this if you want to adjust the button of the dashboard back*/
+
+  
+
+}
+/* TABLET — move main container to the LEFT */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  body.menu-page main.container {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    padding-left: 30px !important; /* this adjust the white background */
+    max-width:  600px !important; /* this adjust yun laki nun right side*/
+    margin-left: 60px !important; /*This adjust margin basta yun*/
+  }
+  body.menu-page .product-grid {
+    max-width: 100%;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns like your screenshot */
+  }
+
+
+}
+@media (min-width: 768px) and (max-width: 1100px) {
+  
+  .cart-summary {
+    position: absolute!important;
+    top: 60px !important;
+    right: -320px !important;
+    margin: 0 !important;
+    width: 350px;
+  }
+}
+
+
+
+
+
+
+
+

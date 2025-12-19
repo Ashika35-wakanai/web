@@ -1,0 +1,36 @@
+.report-filter {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+.report-filter label {
+  margin-right: 15px;
+}
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.report-table th, .report-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+.report-table th {
+  background: #f0f0f0;
+  font-weight: bold;
+}
+.report-summary {
+  background: #e8f5e9;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 20px;
+  font-size: 16px;
+}
+.report-filter form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}

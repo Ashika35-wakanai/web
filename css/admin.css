@@ -1,0 +1,299 @@
+.admin-wrap {
+  background: var(--panel);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  border: 1px solid rgba(0,0,0,0.05);
+  padding: 36px 28px;
+  border-radius: 22px;
+  margin-right: 0;
+}
+
+.admin-title {
+  font-family: 'Seaweed Script', cursive;
+  color: var(--accent-dark);
+  text-align: center;
+  margin: 0 0 28px 0;
+  font-size: 36px;
+  letter-spacing: 0.5px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  align-items: stretch;
+  margin-bottom: 22px;
+}
+
+.stat-box {
+  background: linear-gradient(135deg, #C7AD8A, #B39A7A);
+  border: 2px solid rgba(161,120,81,0.4);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  border-radius: 18px;
+  padding: 16px 18px;
+}
+
+.stat-label {
+  color: #3d291a;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  font-size: 14px;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 800;
+  color: #5c432f;
+  line-height: 1.2;
+  margin-top: 6px;
+}
+
+.stat-links {
+  background: linear-gradient(135deg, #D4BFA0, #C7AD8A);
+  border: 2px solid rgba(161,120,81,0.5);
+  border-radius: 18px;
+  padding: 14px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.stat-links a {
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  background: linear-gradient(135deg, #8a6847, #6F5A47);
+  padding: 8px 12px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.stat-links a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+}
+
+.low-stock-card {
+  background: linear-gradient(135deg, #E8D4B8, #D9C3A5);
+  border: 3px solid #A17851;
+  padding: 16px 18px;
+  border-radius: 16px;
+  margin-bottom: 22px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.low-stock-card h3 {
+  margin: 0 0 8px 0;
+  color: #5c432f;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.low-stock-card ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #6F5A47;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+h2 {
+  margin: 10px 0 12px 0;
+  font-size: 22px;
+  color: var(--accent-dark);
+  border-bottom: 2px solid rgba(161,120,81,0.25);
+  padding-bottom: 6px;
+}
+
+.empty-state {
+  background: #fff7ec;
+  border: 1px dashed rgba(161,120,81,0.35);
+  color: var(--accent-dark);
+  padding: 14px 16px;
+  border-radius: 14px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+.order-card {
+  border: 3px solid rgba(161,120,81,0.4);
+  padding: 18px 18px 16px 18px;
+  margin: 16px 0;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #F5EBD8, #E8DACC);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  border-bottom: 3px solid rgba(161,120,81,0.3);
+  padding-bottom: 10px;
+}
+
+.order-id {
+  font-weight: 800;
+  color: #5c432f;
+  font-size: 16px;
+}
+
+.order-date {
+  color: #8a6847;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.order-detail {
+  margin: 10px 0;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.order-detail-label {
+  font-weight: 700;
+  color: #5c432f;
+  min-width: 140px;
+}
+
+.order-detail-value {
+  color: #6F5A47;
+  font-weight: 600;
+  text-align: right;
+  flex: 1;
+}
+
+.payment-proof {
+  margin: 12px 0;
+  text-align: center;
+  padding: 12px;
+  border: 2px dashed rgba(161,120,81,0.5);
+  border-radius: 14px;
+  background: #fffaf1;
+  color: #5c432f;
+  font-weight: 700;
+}
+
+.payment-proof img {
+  max-width: 170px;
+  max-height: 170px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 6px 10px rgba(0,0,0,0.12);
+}
+
+.order-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.16);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 14px rgba(0,0,0,0.2);
+}
+
+.accept-btn { background: linear-gradient(135deg, #8a6847, #6F5A47); }
+.reject-btn { background: linear-gradient(135deg, #A65A4F, #8a3f36); }
+.cancel-btn { background: linear-gradient(135deg, #C9A77C, #B39A7A); color: #3d291a; }
+
+@media (max-width: 768px) {
+  .admin-wrap { padding: 28px 18px; }
+  .order-detail { flex-direction: column; align-items: flex-start; }
+  .order-detail-value { text-align: left; }
+  .stat-links { justify-content: center; }
+}
+/* Tablet / iPad only */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    .container {
+        
+        align-items: flex-start;
+        
+        padding: 20px;
+    }
+
+    .admin-wrap {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .order-card {
+        margin: 20px auto;
+        max-width: 700px;
+    }
+
+}
+/* Center layout on iPad / Tablet only */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    /* Center main content */
+    .container {
+        
+        padding: 20px;
+    }
+
+    .content-wrapper {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    /* Center the product grid area */
+    .main-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .product-grid {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    /*Prevent sidebar from pushing content too far left */
+    .sidebar, .nav-menu {
+        width: 180px;
+    }
+}
+
+/*this code is it will affect all in the dashboard to the products and ingredients hends up fr ashikaga*/
+/* Kung gusto mo pa adjust yun dashboard at Manage product dito mo nalang adjust pero kung hindi kaya gawa ka nalang iba */
+/* kasi yun sa ingredients is nasa style kaya hindi yun magagalaw */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+  main.container {
+    margin-left: 6px !important;
+    margin-right:6px !important;
+    max-width: calc(100% - 12px) !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  .admin-wrap,
+  .content-wrapper {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width:  950px !important;
+  }
+
+}

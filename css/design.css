@@ -1,0 +1,946 @@
+:root{
+  --bg: #D8BC97;
+  --panel: #FDF7D7;
+  --accent: #A17851;
+  --accent-dark: #6F5A47;
+  --text: #4C3D2F;
+}
+
+/* POS Sidebar */
+.pos-sidebar {
+  position: fixed;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 10px;
+  background: linear-gradient(180deg, rgba(199,173,138,0.95), rgba(161,120,81,0.9));
+  border-radius: 18px;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.18);
+  align-items: center;
+}
+
+.pos-sidebar a {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 24px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.08);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.pos-sidebar a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.14);
+  background: rgba(255,255,255,0.16);
+}
+
+.pos-sidebar a:active {
+  background: rgba(255,255,255,0.24);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.18);
+}
+
+/* Base font + color */
+body, button, input, select, textarea {
+  font-family: 'Viga', Arial, Helvetica, sans-serif;
+  color: var(--text);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background: var(--bg);
+}
+
+/* Layout containers */
+.container {
+  max-width: 1440px;
+  margin: 18px auto;
+  position: relative;
+  padding: 24px 32px 24px 120px; /* reduced left padding to reach closer to sidebar */
+}
+
+/* Content wrapper with cream background and padding - wraps main content */
+.content-wrapper {
+  background: var(--panel);
+  border-radius: 24px;
+  padding: 40px 20px 40px 40px; /* left padding reaches sidebar, minimal right padding */
+  box-shadow: 0 4px 12px rgba(103,55,9,0.1);
+  margin-bottom: 20px;
+  margin-right: 480px; /* reserve space for Order Summary + centering */
+}
+
+/* Override for pages without content-wrapper */
+main.container > *:not(.order-summary):not(style):not(script):not(.footer-buttons):not(.content-wrapper) {
+  background: var(--panel);
+  border-radius: 24px;
+  padding: 40px 20px 40px 40px;
+  box-shadow: 0 4px 12px rgba(103,55,9,0.1);
+  margin-bottom: 20px;
+  margin-right: 480px;
+}
+
+/* Ensure h1 titles are styled nicely at top of content area */
+.content-wrapper > h1:first-child,
+main.container > h1:first-child {
+  margin-top: 0;
+  margin-bottom: 24px;
+  font-family: 'Seaweed Script', cursive;
+  color: var(--accent-dark);
+  text-align: center;
+}
+
+/* Ensure no-scroll layout keeps the sidebar space */
+.no-scroll main.container {
+  padding: 24px 32px 24px 120px !important;
+  box-sizing: border-box;
+}
+
+.main-container {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  background: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+/* Remove the right padding restriction to let products use full width */
+.main-container { box-sizing: border-box; }
+
+/* Product grid (left) */
+.product-grid {
+  /* Let the grid fill available space and use all available width */
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(153px, 1fr));
+  gap: 22px;
+  box-sizing: border-box;
+  width: 100%; /* use full available width */
+}
+
+.product-card {
+  background: var(--panel);
+  border-radius: 22px;
+  box-shadow: 0px 4px 3.6px rgba(161,120,81,0.35);
+  padding: 12px;
+  min-height: 290px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Grouped product card (variants / sizes) */
+.group-card { padding-bottom: 10px }
+.group-card .product-info {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:100%;
+  flex:1;
+}
+.product-sizes {
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+  width:100%;
+  justify-content:center;
+  align-items:flex-end;
+  flex-wrap:nowrap;
+  overflow:visible;
+  padding-bottom:4px;
+}
+.size-option {
+  background: rgba(161,120,81,0.06);
+  border-radius:10px;
+  padding:6px 4px;
+  flex: 0 0 48%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  box-sizing:border-box;
+  height:110px;
+  word-break:break-word;
+  overflow:hidden;
+}
+.size-option.unavailable { opacity:0.5 }
+.size-label{ font-weight:700; color:var(--accent-dark); margin:0 0 1px 0; font-size:12px; text-transform:uppercase; letter-spacing:0.5px; line-height:1; height:13px }
+.size-price{ font-weight:700; color:var(--accent-dark); margin:0 0 3px 0; font-size:13px; flex-grow:0; height:15px; display:flex; align-items:center; justify-content:center }
+.size-action{ width:100%; display:flex; align-items:center; justify-content:center; margin-top:auto }
+.size-action .btn{ padding:6px 10px; font-size:12px; height:30px; line-height:1; display:flex; align-items:center; justify-content:center; white-space:nowrap }
+
+/* Ensure soda and non-soda titles don't affect spacing */
+.product-info h3,
+.soda-title { margin:0 0 8px 0; font-size:16px }
+
+/* Soda series: hide extra description but keep the product name visible */
+.product-card.soda-series .product-info .product-ingredients { display:none }
+
+/* Use brown accent for all product prices (replace default blue) */
+.product-info .price { color: var(--accent-dark) !important }
+
+/* soda title (compact) */
+.soda-title{ font-size:16px; font-weight:700; color:var(--accent-dark); margin-top:6px; text-align:center }
+
+/* Slightly tighten soda card spacing */
+.product-card.soda-series { padding:8px; min-height:200px }
+.product-card.soda-series .product-img-wrap{ height:150px }
+
+.product-img-wrap {
+  width: 153px;
+  height: 175px;
+  border-radius: 24px;
+  background: url('css/air.svg') no-repeat center/contain;
+  opacity: 0.62;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.product-img-wrap img{ width:106px; height:160px; object-fit:cover; border-radius:6px; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.25)); }
+
+/* Order summary (right) — brown themed */
+.cart-summary {
+  /* Anchor summary to container's right edge so it always sits on the right side */
+  position: absolute;
+  width: 420px;
+  /* leave a bit of headroom for header and allow the box to extend lower */
+  max-height: calc(100vh - 48px);
+  right: 62px; /* centered in the right margin space */
+  
+  top: 80px;
+  background: #C7AD8A; /* warm tan */
+  border: 4px solid #A17851;
+  box-sizing: border-box;
+  border-radius: 12px;
+  padding: 18px;
+  z-index: 1000;
+  overflow: hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+/* Make internal Order Summary content flow vertically to avoid overlap and simplify alignment */
+.cart-summary { display: flex; flex-direction: column; }
+.cart-summary { font-size: 15px; line-height: 1.35 }
+.cart-summary .cart { width: 100%; margin-top: 8px; }
+.cart-summary .cart-list-wrap{ max-height:220px; overflow-y:auto; padding-right:6px; padding-bottom:6px }
+.cart-summary .cart-list-wrap{ flex:1 1 auto; min-height:0; overflow-y:auto; padding-right:8px; }
+
+/* ensure transaction details and controls remain visible at bottom */
+.cart-summary .transaction-details,
+.cart-summary .payment-methods,
+.cart-summary .number-pad,
+.cart-summary .checkout-area{ flex: 0 0 auto }
+.cart-summary .cart th, .cart-summary .cart td { padding:6px 4px; font-size:13px }
+.cart-summary .transaction-details { margin-top: 12px; background: rgba(161,120,81,0.12); padding:12px; border-radius:8px; max-width: calc(100% - 20px); }
+.cart-summary .payment-methods { display: flex; gap: 8px; margin-top: 12px }
+.cart-summary .payment-methods .payment-btn{ flex:1; padding:10px; border-radius:8px; font-size:16px }
+.cart-summary .number-pad { margin-top: 12px; width: 100%; }
+.cart-summary .checkout-area { margin-top: 12px; width: 100%; max-width: calc(100% - 20px); }
+.cart-summary .checkout-area .checkout-btn { width: 100%; }
+
+/* Improve contrast and readability for order summary text */
+.cart-summary, .cart-summary * { color: #3b2a17 }
+.cart-summary .total { font-weight:700; font-size:16px }
+.cart-summary .detail-row span { font-size:15px; padding-right: 8px; }
+.cart-summary .detail-row input[type="number"]{ width:110px; max-width: 140px; }
+
+/* Fix overlapping detail rows: ensure inputs and spans wrap and align */
+.cart-summary .detail-row{ display:flex; align-items:center; justify-content:space-between; gap:8px }
+.cart-summary .detail-row input[type="number"]{ width:110px; max-width:40%; }
+.cart-summary .cart td input.ajax-qty{ width:72px }
+.cart-summary .cart td{ vertical-align:middle }
+
+/* Price and button color polish */
+.cart-summary .cart .cart-price,
+.cart-summary .cart .cart-sub{ color: var(--accent-dark); font-weight:700 }
+.cart-summary .cart .cart-del{ text-align:center }
+.cart-summary .del-btn{ background: linear-gradient(180deg,#A17851,#6F5A47); color: var(--panel); border:0; padding:6px 8px; border-radius:6px; cursor:pointer; font-weight:700 }
+.cart-summary .del-btn:hover{ transform: translateY(-1px); box-shadow:0 4px 8px rgba(0,0,0,0.12) }
+
+/* Ensure payment buttons are brown */
+.cart-summary .payment-btn{ background: linear-gradient(180deg,#A17851,#6F5A47); color:var(--panel); border:0 }
+.cart-summary .payment-btn:hover{ transform: translateY(-2px) }
+
+/* Ensure checkout button fits new width */
+.cart-summary .checkout-area .checkout-btn{ width:100% }
+
+/* Footer buttons visibility and alignment */
+.footer-buttons{ display:flex; gap:10px; justify-content:center; margin:22px auto; position:relative; z-index:1100 }
+.footer-buttons button{ min-width:96px }
+
+/* Left sidebar nav (was footer nav) */
+.footer-nav-wrap {
+  position: fixed;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1300;
+}
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 10px;
+  background: linear-gradient(180deg, rgba(199,173,138,0.95), rgba(161,120,81,0.9));
+  border-radius: 18px;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.18);
+  align-items: center;
+}
+.footer-nav a {
+  width: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: #5f412a;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 10px 6px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.08);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.footer-nav a img { width: 26px; height: 26px; }
+.footer-nav a:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.14); background: rgba(255,255,255,0.16); }
+.footer-nav a.active { background: rgba(255,255,255,0.24); color: #3d291a; box-shadow: 0 8px 16px rgba(0,0,0,0.18); }
+
+@media (max-width: 1200px) {
+  .container { padding-left: 150px; }
+  .no-scroll main.container { padding-left: 150px !important; }
+}
+
+@media (max-width: 900px) {
+  .container { padding-left: 135px; }
+  .no-scroll main.container { padding-left: 135px !important; }
+  .footer-nav { padding: 10px 8px; }
+  .footer-nav a { width: 64px; font-size: 11px; padding: 8px 4px; }
+  .footer-nav a img { width: 22px; height: 22px; }
+}
+
+@media (max-width: 700px) {
+  .container { padding-left: 120px; }
+  .no-scroll main.container { padding-left: 120px !important; }
+}
+
+/* Ensure inner panels in order summary use light-brown instead of white */
+.cart-summary .transaction-details,
+.cart-summary .detail-row,
+.cart-summary .order-row,
+.cart-summary .order-cart-tab,
+.cart-summary .order-info,
+.cart-summary .order-cart-tab .product-image {
+  background: transparent;
+  color: var(--text);
+}
+
+.transaction-details { background: rgba(161,120,81,0.06); padding:10px; border-radius:8px; border:1px solid rgba(0,0,0,0.08) }
+.detail-row { border-bottom: 1px solid rgba(0,0,0,0.14); display:flex; justify-content:space-between; padding:6px 0 }
+.detail-row.total { font-weight:700 }
+
+
+.cart-summary h2{ font-size:25px; margin:6px 0 12px 0; color: var(--accent-dark); text-shadow: -3px 5px 7.7px rgba(0,0,0,0.25); }
+
+.order-row{ display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(0,0,0,0.06) }
+.order-row.total{ font-weight:700; font-size:20px }
+
+/* Calculator & number-pad styles (calculator layout) */
+.number-pad{ display:block; margin-top:12px }
+.numpad-row { display:grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom:8px }
+.number-pad button{ aspect-ratio: auto; width:100%; height:40px; border-radius:6px; border:0; font-weight:700; cursor:pointer; background: linear-gradient(180deg,var(--accent-dark),var(--accent)); color:var(--panel); font-size:13px; box-shadow:0 2px 4px rgba(0,0,0,0.08) }
+.number-pad button:hover{ transform: translateY(-2px) }
+.number-pad button:active{ transform: translateY(0); box-shadow: inset 0 4px 8px rgba(0,0,0,0.18); }
+.number-pad button:focus{ outline: 3px solid rgba(161,120,81,0.18); outline-offset:2px }
+.func-btn{ background: linear-gradient(180deg,#A17851,#6F5A47); color: var(--panel) }
+.clr-btn{ background: linear-gradient(180deg,#6F5A47,#553e2d) }
+.disc-btn{ background: linear-gradient(180deg,#D6B76B,#A17851); color:#3b2a17 }
+.void-btn{ background: linear-gradient(180deg,#ef7a7a,#d04b4b) }
+
+/* Checkout button styled to match brown theme */
+.checkout-btn { 
+  width:100%; 
+  padding:8px 10px !important; 
+  background: linear-gradient(180deg,#A17851,#6F5A47) !important; 
+  text-align:center !important; 
+  font-weight:700 !important; 
+  font-size:16px !important; 
+  display:block !important; 
+  margin-top:8px !important; 
+  color:var(--panel) !important; 
+  border-radius:8px; 
+  box-shadow:0 4px 8px rgba(0,0,0,0.12);
+}
+
+/* Checkout area - constrain width to match numpad width */
+.cart-summary .checkout-area { 
+  margin-top: 12px; 
+  width: 100%; 
+}
+.cart-summary .checkout-area .checkout-btn { 
+  width: 100%;
+}
+
+/* Delete button near price */
+.cart-summary .del-btn{ background: linear-gradient(180deg,#A17851,#6F5A47); color: var(--panel); border:0; padding:6px 8px; border-radius:6px; cursor:pointer; font-weight:700; font-size:14px; display:inline-flex; align-items:center; justify-content:center }
+.cart-summary .del-btn:hover{ transform: translateY(-1px); box-shadow:0 4px 8px rgba(0,0,0,0.12) }
+.cart-summary .del-x{ font-size:16px; line-height:1; color: var(--panel) }
+
+/* Header styles matching design (brown tones) */
+.site-header{ position: relative; padding: 6px 0 10px 0; background: linear-gradient(90deg,var(--bg), #C7AD8A); box-shadow:0 6px 18px rgba(0,0,0,0.08) }
+.site-top{ display:grid; grid-template-columns: auto 1fr auto; align-items:center; max-width:1440px; margin:0 auto; padding:0 12px; gap:12px; min-height:70px }
+.brand{ position: relative; width: 460px; margin: 0 auto; height: 70px; display: block !important; }
+.brand .watermark{ font-family:'Viga'; font-size:90px; color:#673709; opacity:0.13; position:absolute; left:50%; top:-36px; transform:translateX(-50%); letter-spacing:7px; width:460px; text-align:center; z-index:0; pointer-events:none; white-space:nowrap }
+.brand .title{ font-family:'Seaweed Script', cursive; font-size:42px; color:#FDE5B7; text-shadow:0 3px 6px rgba(91,73,55,0.4); position:absolute; left:50%; top:14px; transform:translateX(-50%); z-index:2; width:460px; text-align:center; margin:0; white-space:nowrap }
+.search-box{ display:flex; align-items:center; justify-content:center }
+.search-input{ width:560px; max-width:66%; background:var(--bg); border:4px solid rgba(109,54,13,0.45); border-radius:14px; padding:10px 18px; color:#FDE5B7; font-size:15px }
+.account{ display:flex; align-items:center; gap:12px; justify-self:end }
+.account .avatar{ width:48px; height:48px; background:var(--accent); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--panel); font-weight:700 }
+.account .date{ font-size:13px; color:var(--accent-dark); margin-right:6px; white-space:nowrap }
+
+/* Footer */
+.site-footer{ text-align:center; padding:20px; color:#5B4937; margin-top: 32px; }
+
+/* decorative snowflake */
+.snowflake{ background: url('css/snowflake.svg') no-repeat center/contain }
+
+/* Footer navigation now used as a left sidebar */
+.footer-nav-wrap {
+  position: fixed;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1300;
+}
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 10px;
+  background: linear-gradient(180deg, rgba(199,173,138,0.95), rgba(161,120,81,0.9));
+  border-radius: 18px;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.18);
+  align-items: center;
+}
+.footer-nav a {
+  width: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: #5f412a;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 10px 6px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.08);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.footer-nav a img { width: 26px; height: 26px; }
+.footer-nav a:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.14); background: rgba(255,255,255,0.16); }
+.footer-nav a.active { background: rgba(255,255,255,0.24); color: #3d291a; box-shadow: 0 8px 16px rgba(0,0,0,0.18); }
+.footer-nav a:active{ transform: translateY(1px) }
+.footer-nav a:focus{ outline: 3px solid rgba(161,120,81,0.14); outline-offset:3px }
+
+@media (max-width:900px){
+  .brand .watermark{ display:none }
+}
+
+@media (max-width:1300px){
+  .brand .title{ font-size:56px }
+}
+
+@media (max-width:1000px){
+  .brand .title{ font-size:44px }
+}
+
+@media (max-width:700px){
+  .brand .title{ font-size:34px }
+}
+
+/* ensure title doesn't overlap other header controls on narrow screens */
+@media (max-width:1100px){
+  .search-input{ max-width:360px }
+}
+
+/* Footer buttons — always visible, responsive, and un-clipped */
+.footer-buttons{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:nowrap;
+  overflow-x:auto;
+  -webkit-overflow-scrolling: touch;
+  margin:24px auto 20px auto;
+  padding:8px 12px;
+  position:fixed; /* changed from sticky to fixed */
+  bottom:12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index:1200;
+  background: linear-gradient(180deg, rgba(199,173,138,0.9), rgba(199,173,138,0.75));
+  backdrop-filter: blur(4px);
+  border-radius:14px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.15);
+  min-height:64px;
+  max-width: 800px; /* constrain width */
+}
+.footer-buttons button{
+  background: linear-gradient(180deg,#A17851,#6F5A47);
+  color:var(--panel);
+  border:0;
+  padding:12px 20px;
+  border-radius:12px;
+  cursor:pointer;
+  box-shadow:0 6px 12px rgba(0,0,0,0.12);
+  font-size:15px;
+  font-weight:700;
+  min-width:110px;
+}
+.footer-buttons button:hover{ transform: translateY(-2px); box-shadow:0 10px 18px rgba(0,0,0,0.18) }
+
+/* Allow scroll so footer buttons aren't clipped by no-scroll rules */
+.no-scroll, .no-scroll html, .no-scroll body {
+  height: auto;
+  min-height: 100vh;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+}
+.no-scroll body, .no-scroll .container, .no-scroll .main-container, .no-scroll .wrap, .no-scroll main, .no-scroll .site-header, .no-scroll .site-footer {
+  max-height: none;
+  overflow: visible;
+}
+
+/* Small helpers */
+.unavailable { opacity:0.6 }
+.unavailable-badge{ background:#dc3545; color:white; padding:6px 10px; border-radius:8px; position:absolute; top:8px; right:8px }
+
+/* (Restored original layout; appended overrides removed) */
+.cart-summary .total{ font-size:16px }
+
+/* Override default blue buttons from base stylesheet to brown theme */
+.btn, .filter-btn, .add-cart-btn {
+  background: linear-gradient(180deg,#A17851,#6F5A47) !important;
+  color: var(--panel) !important;
+  border: 0 !important;
+  padding: 8px 12px !important;
+  border-radius: 10px !important;
+  text-decoration: none !important;
+  display: inline-block;
+}
+
+/* Payment buttons */
+.payment-btn, .cash-btn, .gcash-btn, .foodp-btn {
+  background: linear-gradient(180deg,#A17851,#6F5A47) !important;
+  color: var(--panel) !important;
+  border: 0;
+}
+
+/* Make the cart table match the brown panel (remove white blocks) */
+.cart { width:100%; border-collapse:collapse; background: transparent }
+.cart th, .cart td { padding:8px; border-bottom:1px solid rgba(0,0,0,0.12); color:var(--text); background: transparent }
+.cart th { font-weight:700; color:var(--accent-dark) }
+
+
+/* Responsive tweak */
+/* Position internal sections of the order summary to flow naturally below the scrollable list.
+   Using static layout lets the breakdown expand and be visible as the panel height changes.
+*/
+.cart-summary .calculations {
+  position: static;
+  left: auto;
+  top: auto;
+  width: 100%;
+  height: auto;
+  margin-top: 8px;
+}
+.cart-summary .subtotal-row { position: static; width: 100%; margin-top:6px }
+.cart-summary .number-pad { position: static; width: auto; height: auto; margin-top:8px }
+
+@media (max-width: 1100px){
+  .product-grid{ width: 100%; padding-right: 0 }
+  /* For small screens we revert to stacked, but keep subtotal visible */
+  
+  .main-container{ flex-direction: column; padding-right: 0 }
+  .cart-summary .calculations, .cart-summary .number-pad { position: static; width: auto; height: auto }
+}
+
+/* ===== Header layout: left brand, centered search, right account ===== */
+.site-header{ position: relative; padding: 10px 0 18px 0; background: linear-gradient(90deg,var(--bg), #C7AD8A); box-shadow:0 6px 18px rgba(0,0,0,0.08) }
+.site-top{ display:grid; grid-template-columns: 1fr auto 1fr; align-items:center; max-width:1151px; margin:0 auto; padding:0 32px; gap:12px }
+
+/* Brand (left) - watermark behind title */
+.brand{ position:relative; justify-self:start; display:flex; align-items:center }
+.brand .watermark{ position:absolute; left:-40px; top:-30px; font-family:'Viga',sans-serif; font-size:125px; line-height:168px; color:#673709; opacity:0.26; text-shadow:0px 4px 4px #AC895D; pointer-events:none }
+.brand .title{ font-family:'Seaweed Script', cursive; font-size:64px; color:#FDE5B7; text-shadow:0px 4px 4.5px #665642; margin-left:24px }
+
+/* Search (center) */
+.search-box{ justify-self:center; display:flex; align-items:center }
+.search-icon{ margin-right:8px; color:var(--accent-dark); font-size:18px }
+.search-input{ width:390px; height:40px; box-sizing:border-box; background:#D8BC97; border:5px solid rgba(109,54,13,0.51); border-radius:14px; padding:6px 12px; color:#FDE5B7; font-family:'Viga'; font-size:20px }
+.search-input::placeholder{ color:#FDE5B7 }
+
+/* Account (right) */
+.site-top .account{ justify-self:end; display:flex; align-items:center; gap:12px }
+.site-top .account .date{ font-family:'Viga',sans-serif; font-size:20px; color:#FDE5B7; text-shadow:3px 0 6px rgba(153,131,104,0.34) }
+
+@media (max-width:1200px){
+  .site-top{ grid-template-columns: 1fr; padding:8px 16px }
+  .brand .watermark{ display:none }
+  .brand .title{ font-size:40px; margin-left:0 }
+  .search-input{ width:100% }
+  /* White background box stays for content-wrapper */
+.content-wrapper {
+  background: var(--panel);
+  border-radius: 24px;
+  padding: 40px 20px 40px 40px;
+  /* remove margin-right pushing, if present */
+  margin-right: 0;
+  flex: 1; /* take available space */
+}
+/* Hide sidebar on any screen smaller than 1100px */
+@media (max-width: 1100px) {
+    .footer-nav-wrap,
+    .pos-sidebar {
+        display: flex !important;
+    }
+}
+}      
+
+/* --- iPad Layout: Keep PC Style (Products Left, Summary Right) --- */
+
+@media (max-width: 1000px) and (min-width: 500px) {
+
+  .main-container {
+
+  align-items: flex-start !important;
+  padding-bottom: 20px 20px 50px 20px;
+  
+  }
+
+  /* Give product grid more space */
+  .product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16pxx; /* space between cards horizontally and vertically */
+  padding: 20 0px; /* space on left & right edges */
+  width: 650px;
+  }
+  /* 1. Shrink the card wrapper itself */
+  .product-card {
+  flex: 0 0 calc(24.20% - 55px); /* 3 cards per row */
+  max-width: calc(24.20% - 55px);
+
+  flex-direction: column;
+  margin-right: 30px;
+  margin-bottom: 20px; /* vertical gap between rows */
+  }
+
+  /* 2. Shrink the image wrapper */
+  .product-img-wrap {
+  height: 100px !important; /* Reduced image container height */
+  width: 100% !important;
+  margin-bottom: 5px !important; /* Tighten space under image */
+
+  }
+
+  /* 3. Shrink the image inside the wrapper */
+  .product-img-wrap img {
+  width: 70px !important; /* Very small image width */
+  height: 120px !important; /* Reduced image height */
+  object-fit: contain !important; /* Prevents image from being cut off */
+  }
+
+  /* 4. Shrink product title and info font size */
+  .product-info h3,
+  .soda-title {
+  font-size: 13px !important; /* Smallest readable text */
+  margin-bottom: 3px !important; /* Tightest spacing */
+  }
+
+  /* 5. Shrink price font size */
+  .product-info .price {
+  font-size: 13px !important;
+  }
+
+  /* --- Optional: Tweak Grouped Card Sizes (if you use variants) --- */
+  .size-option {
+  height: 80px !important; /* Smaller height for variant buttons */
+  }
+  .size-label, .size-price {
+  font-size: 11px !important;
+  }
+  
+  
+  
+  .content-wrapper {
+    margin-left: 5px;              /* centers if needed */
+    margin-right: 10px;             /* optional */
+    padding: 0 20px;                /* horizontal pad
+  }
+ 
+  
+        .pos-sidebar, .footer-nav {
+        padding: 8px 6px !important; /* Smaller padding inside the sidebar box */
+        gap: 8px !important;         /* Less space between buttons */
+    }
+    .footer-nav a {
+        width: 60px !important;      /* Reduced button width */
+        font-size: 10px !important;  /* Smaller font for text labels */
+        padding: 8px 4px !important; /* Reduced button padding */
+        border-radius: 12px !important;
+    }
+    .footer-nav a img { 
+        width: 20px !important;      /* Smaller icon size */
+        height: 20px !important; 
+    }
+    
+    /* Ensure the container still accounts for the sidebar's position */
+    .container {
+        padding-left: 100px !important; /* Slightly reduced left padding to match smaller sidebar */
+    }
+
+
+  /* shrink sidebar slightly */
+  .pos-sidebar {
+  transform: translateY(-50%) scale(0.85);
+  left: 6px;
+  }
+
+  main.container {
+  
+  align-items: flex-start;
+  gap: 30px; /* or some space between */
+
+
+}
+
+
+
+/* Hide sidebar on any screen smaller than 1100px */
+    @media (max-width: 1100px) {
+    .footer-nav-wrap,
+    .pos-sidebar {
+        display: flex !important;
+    }
+  }
+}
+/* === TABLET SHOULD LOOK LIKE PC === */
+@media (max-width: 1100px) and (min-width: 768px) {
+
+  .cart-summary {
+    position: absolute;
+    right: 40px;
+    top: 80px;
+    width: 380px;          /* slightly smaller than PC */
+    max-height: calc(100vh - 120px);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cart-summary .cart-list-wrap {
+    max-height: 180px;
+    overflow-y: auto;
+  }
+
+  .cart-summary .transaction-details {
+    margin-top: 12px;
+  }
+
+}
+
+/* =====================================
+   MOBILE HARD RESET — ORDER SUMMARY
+   ===================================== */
+@media (max-width: 767px){
+
+  /* Stack layout */
+  .main-container{
+    flex-direction: column !important;
+  }
+
+  /* HARD RESET cart summary */
+  .cart-summary{
+    position: absolute !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    padding: 8px !important;
+    margin: 8px 0 !important;
+
+    border-width: 2px !important;
+    border-radius: 10px !important;
+
+    font-size: 12px !important;
+    box-shadow: none !important;
+  }
+
+  /* Title */
+  .cart-summary h2{
+    font-size: 16px !important;
+    margin: 4px 0 6px !important;
+    text-align: center;
+  }
+
+  /* Cart list */
+  .cart-summary .cart-list-wrap{
+    max-height: 180px !important;
+    overflow-y: auto !important;
+  }
+
+  /* Table shrink */
+  .cart-summary table{
+    font-size: 11px !important;
+  }
+
+  .cart-summary th,
+  .cart-summary td{
+    padding: 3px 2px !important;
+  }
+
+  /* Totals */
+  .order-row{
+    font-size: 13px !important;
+    padding: 4px 0 !important;
+  }
+
+  .order-row.total{
+    font-size: 14px !important;
+  }
+
+  /* Transaction details */
+  .transaction-details{
+    padding: 6px !important;
+    margin-top: 6px !important;
+  }
+
+  .detail-row{
+    font-size: 12px !important;
+    padding: 3px 0 !important;
+  }
+
+  /* Inputs */
+  .cart-summary input{
+    height: 28px !important;
+    font-size: 12px !important;
+  }
+
+  /* Number pad — SMALL */
+  .number-pad{
+    margin-top: 6px !important;
+  }
+
+  .number-pad button{
+    height: 30px !important;
+    font-size: 11px !important;
+    padding: 0 !important;
+  }
+
+  /* Checkout */
+  .checkout-btn{
+    font-size: 13px !important;
+    padding: 8px !important;
+    margin-top: 6px !important;
+  }
+
+}
+/* === TABLET = PC LAYOUT === */
+@media (min-width: 768px) and (max-width: 1100px) {
+
+  .main-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    min-height: auto;      /* IMPORTANT */
+  }
+
+  .product-grid {
+    gap: 16px;
+    width: 100%;
+  }
+
+  .cart-summary {
+    position: absolute;
+    right: 40px;
+    top: 80px;
+    width: 380px;
+    max-height: calc(100vh - 120px);
+  }
+
+}
+/* ===== TABLET: SHRINK LEFT SIDEBAR ===== */
+/* Ito naman is yun sa may size bar ito yun nagpapaliit o nagpapalaki */
+@media (min-width: 768px) and (max-width: 1100px) {
+
+  /* Sidebar container */
+  .footer-nav,
+  .pos-sidebar {
+    padding: 8px 6px !important;
+    gap: 8px !important;
+    border-radius: 14px !important;
+  }
+
+  /* Sidebar buttons */
+  .footer-nav a,
+  .pos-sidebar a {
+    width: 56px !important;
+    height: 56px !important;
+    padding: 6px 4px !important;
+    font-size: 10px !important;
+    border-radius: 12px !important;
+  }
+
+  /* Icons inside buttons */
+  .footer-nav a img,
+  .pos-sidebar a img {
+    width: 25px !important;
+    height: 25px !important;
+  }
+
+  /* Slight scale-down so it feels lighter */
+  .footer-nav-wrap,
+  .pos-sidebar {
+    transform: translateY(-50%) scale(0.88) !important;
+    left: 8px !important;
+  }
+
+  /* Adjust main content spacing so nothing overlaps */
+  .container {
+    padding-left: 100px !important;
+  }
+  .order-summary {
+    margin-top: 0 !important;
+    align-self: flex-start;
+  }
+
+  .pos-container {
+    align-items: flex-start;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
