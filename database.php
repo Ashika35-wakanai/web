@@ -4,8 +4,8 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 $DB_HOST = '127.0.0.1';
-$DB_USER = 'Ashikaga';
-$DB_PASS = 'Ohana!@36';
+$DB_USER = 'root';
+$DB_PASS = '';
 $DB_NAME = 'shop_db';
 
 $conn = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
